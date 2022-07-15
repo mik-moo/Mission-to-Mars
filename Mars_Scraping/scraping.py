@@ -100,32 +100,34 @@ def mars_facts():
 
 def hemisphere_images(browser):
     
-    # Use browser to visit the URL 
+    # 1. Use browser to visit the URL 
     url = 'https://marshemispheres.com/'
 
     browser.visit(url)
 
 
-    # Create a list to hold the images and titles.
+    # 2. Create a list to hold the images and titles.
     hemisphere_image_urls = []
+    links = browser.find_by_css('a.product-item img')
 
-    # Write code to retrieve the image urls and titles for each hemisphere.
+    # 3. Write code to retrieve the image urls and titles for each hemisphere.
     # Find and click the full image button
-    
-    for i in range (4):
-    # create dictionary
+    for i in range (len(links)):
+        # create dictionary
         hemispheres = {}
-        browser.find_by_css('a.product-item h3')[i].click()
-        browser.find_by_text('Sample').click()
-        title=browser.find_by_css('h2.title').text
-         # Find the image url
-        hem_img_url = img_soup.find('img').get('src')
-        hemispheres['hem_img_url'] = img_url
-        hemispheres['title']= title
+        browser.find_by_css('a.product-item img')[i].click()
+        sample= browser.links.find_by_text('Sample').first
+        hemispheres['img_url'] = sample['href']
+      
+        # hemispheres['img_url'] = img_url
+        hemispheres['title']= browser.find_by_css('h2.title').text
         hemisphere_image_urls.append(hemispheres)
         browser.back()
-    # Print the list that holds the dictionary of each image url and title.
-    return hemisphere_image_urls   
+
+
+    # 4. Print the list that holds the dictionary of each image url and title.
+    return hemisphere_image_urls
+
     
         
 
